@@ -1,18 +1,11 @@
 "use client"
 import { useState } from 'react';
 import styles from '@/app/styles/RegexValidation.module.css';
-import AnalyticsClient from '@/app/utils/AnalyticsClient.mjs'
-
-const clientId = ""
-const clientSecret = ""
-const refreshToken = ""
-const analyticsClient = new AnalyticsClient(clientId, clientSecret, refreshToken);
 
 export default function RegexValidation() {
   const [input, setInput] = useState('');
   const [isValid, setIsValid] = useState(false);
 
-  // Validate input using regex
   const validateInput = (value) => {
     const pattern = /^(?:\d \d{2} \d{4}\/\d{2}\/\d{2} \d{2}:\d{2}\n?)+$/;
     setIsValid(pattern.test(value));
@@ -22,6 +15,21 @@ export default function RegexValidation() {
     const value = event.target.value;
     setInput(value);
     validateInput(value);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch('/api/analytics', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ data: input }),
+      });
+      // Handle response
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -36,6 +44,7 @@ export default function RegexValidation() {
       <button
         id="submitButton"
         disabled={!isValid}
+        onClick={handleSubmit}
         className={`${styles.submitButton} ${isValid ? styles.enabled : ''}`}
       >
         Submit
