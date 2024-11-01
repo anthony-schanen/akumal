@@ -1,9 +1,8 @@
-/*$Id$*/
-const https = require('https');
-const fs = require('fs');
-const path = require('path');
-const querystring = require('querystring');
-const request = require('request');
+import https from 'https';
+import fs from 'fs';
+import path from 'path';
+import querystring from 'querystring';
+import request from 'request';
 const analyticsURI = "analyticsapi.zoho.com";
 const accountsURI = "accounts.zoho.com";
 const clientVersion = "2.6.0";

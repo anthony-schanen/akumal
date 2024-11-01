@@ -1,10 +1,11 @@
 "use client"
 import { useState } from 'react';
 import styles from '@/app/styles/RegexValidation.module.css';
-import AnalyticsClient from '@/app/utils/AnalyticsClient'
+import AnalyticsClient from '@/app/utils/AnalyticsClient.mjs'
 
 const clientId = ""
 const clientSecret = ""
+const refreshToken = ""
 const analyticsClient = new AnalyticsClient(clientId, clientSecret, refreshToken);
 
 export default function RegexValidation() {
