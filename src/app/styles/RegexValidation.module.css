@@ -1,0 +1,50 @@
+/* styles/RegexValidation.module.css */
+.container {
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    margin: 0 auto;
+    margin-top: 15%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+  
+  .inputField {
+    width: calc(100% - 30px);
+    height: 150px;
+    padding: 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+    outline: none;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+    margin-top: 10px;
+  }
+  
+  .inputField:focus {
+    border-color: #4a90e2;
+  }
+  
+  .submitButton {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #a0c4e4;
+    border: none;
+    border-radius: 5px;
+    cursor: not-allowed;
+    transition: background-color 0.3s, color 0.3s;
+    margin-top: 15px;
+  }
+  
+  .submitButton.enabled {
+    background-color: #4a90e2;
+    cursor: pointer;
+  }
