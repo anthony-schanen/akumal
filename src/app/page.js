@@ -7,7 +7,6 @@ export default function RegexValidation() {
   const [input, setInput] = useState('');
   const [isValid, setIsValid] = useState(false);
 
-  // Validate input using regex
   const validateInput = (value) => {
     const pattern = /^(?:\d \d{2} \d{4}\/\d{2}\/\d{2} \d{2}:\d{2}\n?)+$/;
     setIsValid(pattern.test(value));
