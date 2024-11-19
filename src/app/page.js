@@ -23,7 +23,7 @@ export default function HomePage() {
   }, [status]);
 
   const validateInput = (value) => {
-    const pattern = /^(?:\d \d{2} \d{4}\/\d{2}\/\d{2} \d{2}:\d{2}\n?)+$/gm;
+    const pattern = /^(?:\d \d{2} \d{4}\/\d{2}\/\d{2} \d{2}:\d{2}\n?)+$/;
     setIsValid(pattern.test(value));
   };
 
