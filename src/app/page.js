@@ -9,15 +9,14 @@ export default function HomePage() {
   const [isValid, setIsValid] = useState(false);
   const { data: session, status } = useSession();
   const [inputStatus, setInputStatus] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false); // New state for submission
 
   useEffect(() => {
     // Check if there is stored data after authentication
     if (status === "authenticated") {
       const storedInput = localStorage.getItem("inputData");
       if (storedInput) {
-        // Submit the data
         submitData(storedInput);
-        // Clear the stored data
         localStorage.removeItem("inputData");
       }
     }
@@ -27,6 +26,7 @@ export default function HomePage() {
     const pattern = /^(?:\d \d{2} \d{4}\/\d{2}\/\d{2} \d{2}:\d{2}\n?)+$/;
     const inputValidity = pattern.test(value);
     setIsValid(inputValidity);
+    setInputStatus(inputValidity ? "Format OK" : "");
   };
 
   const handleInputChange = (event) => {
@@ -42,9 +42,7 @@ export default function HomePage() {
     }
 
     if (!session) {
-      // Store the input data before authentication
       localStorage.setItem("inputData", input);
-      // Initiate sign-in and redirect back to the same page
       signIn("zoho");
     } else {
       submitData(input);
@@ -52,6 +50,7 @@ export default function HomePage() {
   };
 
   const submitData = async (dataToSubmit) => {
+    setIsSubmitting(true);
     try {
       const response = await fetch("/api/addRow", {
         method: "POST",
@@ -68,18 +67,23 @@ export default function HomePage() {
         throw new Error(errorMessage);
       }
 
+      alert("Data submitted successfully!");
       console.log("Rows added:", result.data);
       setInput("");
       setIsValid(false);
+      setInputStatus("");
     } catch (error) {
       console.error("Error adding rows:", error);
       alert(`Error: ${error.message}`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <div className={styles.outerContainer}>
       <div className={styles.container}>
+        <p className={styles.validStatus}>{inputStatus}</p>
         <textarea
           id="inputField"
           placeholder="Enter data"
@@ -87,14 +91,20 @@ export default function HomePage() {
           onChange={handleInputChange}
           className={styles.inputField}
         ></textarea>
-        <button
-          id="submitButton"
-          disabled={!isValid}
-          className={`${styles.submitButton} ${isValid ? styles.enabled : ""}`}
-          onClick={handleClick}
-        >
-          Submit
-        </button>
+        {isSubmitting ? (
+          <div className={styles.spinnerContainer}>
+          <div className={styles.spinner}></div>
+        </div>
+        ) : (
+          <button
+            id="submitButton"
+            disabled={!isValid}
+            className={`${styles.submitButton} ${isValid ? styles.enabled : ""}`}
+            onClick={handleClick}
+          >
+            Submit
+          </button>
+        )}
       </div>
     </div>
   );
