@@ -8,6 +8,7 @@ export default function HomePage() {
   const [input, setInput] = useState("");
   const [isValid, setIsValid] = useState(false);
   const { data: session, status } = useSession();
+  const [inputStatus, setInputStatus] = useState("");
 
   useEffect(() => {
     // Check if there is stored data after authentication
@@ -24,7 +25,8 @@ export default function HomePage() {
 
   const validateInput = (value) => {
     const pattern = /^(?:\d \d{2} \d{4}\/\d{2}\/\d{2} \d{2}:\d{2}\n?)+$/;
-    setIsValid(pattern.test(value));
+    const inputValidity = pattern.test(value);
+    setIsValid(inputValidity);
   };
 
   const handleInputChange = (event) => {
