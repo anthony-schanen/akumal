@@ -101,17 +101,26 @@ export async function POST(req) {
 }
 
 function processInputData(inputData) {
-  const pattern = /(\d) (\d{2}) (\d{4}\/\d{2}\/\d{2}) (\d{2}:\d{2})/g;
+  const pattern = /([A-Z]+)(\d{2}) (\d{4}\/\d{2}\/\d{2}) (\d{2}:\d{2}):\d{2}/g;
   const rows = [];
+  const now = new Date(); 
   let match;
-
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); 
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}/${month}/${day} ${hours}:${minutes}`;
+  };
+  const createdDate = formatDate(now);
   while ((match = pattern.exec(inputData)) !== null) {
-    const [_, location, user, date, time] = match;
-    const dateTime = `${date} ${time}`; // Combine date and time
+    const [_, user, location, date, time] = match; 
     rows.push({
-      location: location,
-      user: user,
-      created_date: dateTime,
+      user: user, 
+      location: location, 
+      scan_date: `${date} ${time}`,
+      created_date: createdDate, 
     });
   }
 

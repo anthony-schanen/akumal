@@ -23,7 +23,7 @@ export default function HomePage() {
   }, [status]);
 
   const validateInput = (value) => {
-    const pattern = /^(?:\d \d{2} \d{4}\/\d{2}\/\d{2} \d{2}:\d{2}\n?)+$/;
+    const pattern = /^(?:[A-Z0-9]{3} \d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}\n?)+$/;
     const inputValidity = pattern.test(value);
     setIsValid(inputValidity);
     setInputStatus(inputValidity ? "Format OK" : "");
